@@ -14,7 +14,7 @@ module CraigslistCrawler
 
     def save
       if duplicate?
-         raise "Email already taken."
+         raise "That email is already taken."
       else
         @db.execute("insert into users ('email', 'password') values ('#{@email}', '#{@password}')")
       end
@@ -24,7 +24,7 @@ module CraigslistCrawler
       @db = SQLite3::Database.new "crawler.db"
       user_array = @db.execute("select * from users where email = '#{email}' and password = '#{password}'")
       if user_array.length == 0
-        raise "No user with that email or password."
+        raise "There's no user with that email and password."
       else
         User.new(user_array[0][1], user_array[0][2])
       end

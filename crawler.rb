@@ -21,7 +21,9 @@ module CraigslistCrawler
     end
 
     def url
-      "http://#{@location}.craigslist.org/search/#{@section}#{"/#{@sub_region}" unless @sub_region.nil?}?query=#{@query}&srchType=A&minAsk=#{@min_price}&maxAsk=#{@max_price}&bedrooms=#{@bedrooms}&addTwo=#{'purrr' if @cat == true}&addThree=#{'wooof' if @dog == true}"
+      "http://#{@location}.craigslist.org/search/#{@section}#{"/#{@sub_region}" unless @sub_region.nil?}"\
+        "?query=#{@query}&srchType=A&minAsk=#{@min_price}&maxAsk=#{@max_price}&bedrooms=#{@bedrooms}"\
+        "&addTwo=#{'purrr' if @cat == true}&addThree=#{'wooof' if @dog == true}"
     end
 
     def listing_urls
