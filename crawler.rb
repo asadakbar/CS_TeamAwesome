@@ -8,6 +8,8 @@ module CraigslistCrawler
 
   class Crawler
 
+    #attr_reader :listings
+
     def initialize(options = {})
       #required params
       @location = options.delete(:location) { raise ArgumentError.new("You need to pass in a location") } # eg sfbay
@@ -25,6 +27,8 @@ module CraigslistCrawler
         #:query => "bay view" (search query)
         #:bedrooms => 5 (number of bedrooms)
         #:sub_region => sfc (others: eby, pen, nby, etc)
+
+      #@listings = listings
     end
 
     def url

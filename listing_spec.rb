@@ -34,14 +34,10 @@ describe "Listing.new" do
 
   end
 
-  context "#contacted?" do
-    it "returns false if the listing owner was not contacted" do
-      listing.contacted?.should be_false
-    end
-
-    it "returns true if the listing owner has been contacted" do
-      listing = Listing.new(:title => "$62000 / 2br - Great house!", :craigslist_id => 3071972480, :email => 'vwdzk-3071972480@hous.craigslist.org', :contacted_at => Time.now)
-      listing.contacted?.should be_true
+  context "#save" do
+    it "saves the listing to the database" do
+      listing.save
     end
   end
+
 end
