@@ -1,4 +1,4 @@
-module CraigslistCrawler
+ module CraigslistCrawler
   class Listing
 
     def initialize(options)
