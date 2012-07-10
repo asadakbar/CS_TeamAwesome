@@ -27,11 +27,11 @@ describe "Crawler.new" do
 
   context "generates a craigslist url with the specified parameters" do
     it "returns the craigslist search url" do
-      crawler.url.should eq 'http://sfbay.craigslist.org/search/hhh?query=&srchType=A&minAsk=&maxAsk=&bedrooms=&addTwo=&addThree='
+      crawler.url.should eq 'http://sfbay.craigslist.org/search/hhh?srchType=A&addTwo=&addThree=&maxAsk=&minAsk='
       option2 = {:location => 'sfbay', :section => 'hhh', :cat => true, :min_price => 3000, :bedrooms => 3 }
-      Crawler.new(option2).url.should eq 'http://sfbay.craigslist.org/search/hhh?query=&srchType=A&minAsk=3000&maxAsk=&bedrooms=3&addTwo=purrr&addThree='
+      Crawler.new(option2).url.should eq 'http://sfbay.craigslist.org/search/hhh?srchType=A&bedrooms=3&addTwo=purrr&addThree=&maxAsk=&minAsk=3000'
       option3 = {:location => 'sfbay', :section => 'hhh', :sub_region => 'sby', :max_price => 2000, :bedrooms => 4, :query => 'view', :dog => true }
-      Crawler.new(option3).url.should eq 'http://sfbay.craigslist.org/search/hhh/sby?query=view&srchType=A&minAsk=&maxAsk=2000&bedrooms=4&addTwo=&addThree=wooof'
+      Crawler.new(option3).url.should eq 'http://sfbay.craigslist.org/search/hhh/sby?srchType=A&sub_region=sby&bedrooms=4&query=view&addTwo=&addThree=wooof&maxAsk=2000&minAsk='
     end
   end
 
