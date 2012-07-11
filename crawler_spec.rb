@@ -23,6 +23,7 @@ describe "Crawler.new" do
       expect {Crawler.new(:location => 'sfbay')}.should raise_error(ArgumentError, "You need to pass in a section")
     end
 
+    it "raises an argument if user id is not passed in as an option"
   end
 
   context "generates a craigslist url with the specified parameters" do

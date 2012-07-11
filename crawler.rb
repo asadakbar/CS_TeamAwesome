@@ -3,6 +3,7 @@ require 'open-uri'
 require 'nokogiri'
 require 'cgi'
 require_relative 'listing'
+require 'sqlite3'
 
 module CraigslistCrawler
 
@@ -44,7 +45,9 @@ module CraigslistCrawler
       listings = listing_urls.collect do |listing_url|
         doc = Nokogiri::HTML(open(listing_url))
         next if listing_details(doc).nil?
+        #check if listing already exists before saving
         Listing.new(listing_details(doc))
+        #save to db
       end.compact!
       listings
     end
