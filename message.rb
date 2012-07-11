@@ -3,8 +3,9 @@ require 'json'
 
 module CraigslistCrawler
   class Message
-    MAILGUN_API_KEY = "https://api:key-86cra9g7axoraovh5tt96int-0elozd5"
-    MAILGUN_API_URL = "@api.mailgun.net/v2/craigslistcrawler.mailgun.org/messages"
+    MAILGUN_KEY = "key-86cra9g7axoraovh5tt96int-0elozd5"
+    MAILGUN_ENDPOINT = "api.mailgun.net/v2/craigslistcrawler.mailgun.org/messages"
+    MAILGUN_URL = "https://api:#{MAILGUN_KEY}@#{MAILGUN_ENDPOINT}"
 
     attr_reader :sent_at
 
@@ -12,10 +13,9 @@ module CraigslistCrawler
       message_options.each { |key, value| instance_variable_set("@#{key}", {key => value}) }
     end
 
-    def send
+    def send!
       begin
-        mailgun_response = RestClient.post("#{MAILGUN_API_KEY}#{MAILGUN_API_URL}", @to, @from, @subject, @text)
-        JSON.parse(mailgun_response)
+        RestClient.post("#{MAILGUN_URL}", @to, @from, @subject, @text)
         @sent_at = Time.now
         :success
       rescue

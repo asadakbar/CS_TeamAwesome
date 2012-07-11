@@ -1,39 +1,38 @@
-require "sqlite3"
-
 module CraigslistCrawler
   class User
     attr_accessor :search_options, :email_options
 
-    def initialize(email, password, search_options = {}, email_options = {}, database = "crawler.db")
+    def initialize(email, password, search_options = {}, email_options = {})
       @email = email
       @password = password
       @search_options = search_options
       @email_options = email_options
-      @db = CraigslistCrawler.db(database)
     end
 
     def save
       if duplicate?
          raise "That email is already taken."
       else
-        @db.execute("insert into users ('email', 'password') values ('#{@email}', '#{@password}')")
+        CraigslistCrawler.database.execute("insert into users ('email', 'password')
+                                            values ('#{@email}', '#{@password}')")
       end
     end
 
-    def self.authenticate(email, password, database = "crawler.db")
-      @db = CraigslistCrawler.db(database)
-      user_array = @db.execute("select * from users where email = '#{email}' and password = '#{password}'")
+    def self.authenticate(email, password)
+      user_array = CraigslistCrawler.database.execute("select * from users
+                                                       where email = '#{email}' and password = '#{password}'")
       if user_array.length == 0
         raise "There's no user with that email and password."
       else
-        User.new(user_array[0][1], user_array[0][2], nil, nil, database)
+        User.new(user_array[0][1], user_array[0][2])
       end
     end
 
     private
 
     def duplicate?
-      @db.execute("select * from users where email like '#{@email}'")[0]
+      CraigslistCrawler.database.execute("select * from users
+                                          where email like '#{@email}'")[0]
     end
   end
 end

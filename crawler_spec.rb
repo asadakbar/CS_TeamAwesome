@@ -1,10 +1,4 @@
-require 'simplecov'
-SimpleCov.start
-require 'rspec'
-require_relative 'crawler'
-require_relative 'listing'
-
-include CraigslistCrawler
+require "./spec_helper"
 
 describe "Crawler.new" do
 

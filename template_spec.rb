@@ -1,5 +1,4 @@
-require 'rspec'
-require_relative 'template'
+require "./spec_helper"
 
 include CraigslistCrawler
 

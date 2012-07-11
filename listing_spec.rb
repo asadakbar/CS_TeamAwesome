@@ -1,10 +1,4 @@
-require 'simplecov'
-SimpleCov.start
-require 'rspec'
-require_relative 'listing'
-require_relative 'helpers'
-
-include CraigslistCrawler
+require './spec_helper'
 
 describe "Listing.new" do
 
@@ -12,7 +6,7 @@ describe "Listing.new" do
                            :craigslist_id => 3071972480,
                            :email => 'vwdzk-3071972480@hous.craigslist.org',
                            :user_id => 1 } }
-  let(:listing) { Listing.new(default_options, 'test.db') }
+  let(:listing) { Listing.new(default_options) }
 
   it "initializes a new listing" do
     listing.should be_an_instance_of Listing
@@ -46,7 +40,7 @@ describe "Listing.new" do
 
   end
 
-  context "#save" do
+  context "#save!" do
     it "saves the listing to the database" do
       listing.id.should be_nil
       listing.save!

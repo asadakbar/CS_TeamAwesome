@@ -1,7 +1,11 @@
-module CraigslistCrawler
+require 'sqlite3'
 
-  def self.db(db_file_name)
-    SQLite3::Database.new db_file_name
+module CraigslistCrawler
+  def self.database=(path_to_database)
+    @database = SQLite3::Database.new path_to_database
   end
 
+  def self.database
+    @database
+  end
 end

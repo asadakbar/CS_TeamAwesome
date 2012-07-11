@@ -1,5 +1,5 @@
 require 'rspec'
-require './email.rb'
+require './message.rb'
 
 include CraigslistCrawler
 
@@ -44,27 +44,25 @@ describe Message do
     end
   end
 
-  context "#send" do
+  context "#send!" do
     it "returns :success if it successfully sends the email" do
       RestClient.should_receive(:post).with(*GOOD_MAILGUN_OPTIONS).and_return(MAILGUN_RESPONSE)
-      test_message.send.should eq(:success)
+      test_message.send!.should eq(:success)
     end
 
     it "returns :failure if it can't send the email" do
       @bad_message = Message.new(BAD_MESSAGE_OPTIONS)
       RestClient.should_receive(:post).with(*BAD_MAILGUN_OPTIONS).and_raise(RestClient::BadRequest)
-      @bad_message.send.should eq(:failure)
+      @bad_message.send!.should eq(:failure)
     end
   end
 
   context "#sent_at" do
     it "returns the time the email was sent" do
       RestClient.should_receive(:post).with(*GOOD_MAILGUN_OPTIONS).and_return(MAILGUN_RESPONSE)
-      test_message.send
+      Time.stub(:now).and_return(Time.now)
 
-      current_time = Time.now
-      Time.stub(:now).and_return(current_time)
-
+      test_message.send!
       test_message.sent_at.should eq Time.now
     end
   end

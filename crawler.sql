@@ -15,7 +15,7 @@ CREATE TABLE listings (
 
 CREATE TABLE message_templates (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    body TEXT NOT NULL
+    text TEXT NOT NULL
 );
 
 CREATE TABLE messages (
