@@ -8,7 +8,7 @@ include CraigslistCrawler
 
 describe "Crawler.new" do
 
-  let(:crawler) {Crawler.new(:location => "sfbay", :section => 'hhh')}
+  let(:crawler) {Crawler.new(:location => "sfbay", :section => 'hhh', :user_id => 1)}
 
   context "initialize the crawler with options" do
     it "initializes the crawler" do
@@ -16,22 +16,24 @@ describe "Crawler.new" do
     end
 
     it "raises an argument if location is not passed in as an option" do
-      expect {Crawler.new(:section => 'hhh')}.should raise_error(ArgumentError, "You need to pass in a location")
+      expect {Crawler.new(:section => 'hhh', :user_id => 1)}.should raise_error(ArgumentError, "You need to pass in a location")
     end
 
     it "raises an argument if section is not passed in as an option" do
-      expect {Crawler.new(:location => 'sfbay')}.should raise_error(ArgumentError, "You need to pass in a section")
+      expect {Crawler.new(:location => 'sfbay', :user_id => 1)}.should raise_error(ArgumentError, "You need to pass in a section")
     end
 
-    it "raises an argument if user id is not passed in as an option"
+    it "raises an argument if user id is not passed in as an option" do
+      expect {Crawler.new(:location => "sfbay", :section => 'hhh')}.should raise_error(ArgumentError, "You need to pass in a user id")
+    end
   end
 
   context "generates a craigslist url with the specified parameters" do
     it "returns the craigslist search url" do
       crawler.url.should eq 'http://sfbay.craigslist.org/search/hhh?srchType=A&addTwo=&addThree=&maxAsk=&minAsk='
-      option2 = {:location => 'sfbay', :section => 'hhh', :cat => true, :min_price => 3000, :bedrooms => 3 }
+      option2 = {:location => 'sfbay', :section => 'hhh', :cat => true, :min_price => 3000, :bedrooms => 3, :user_id => 1 }
       Crawler.new(option2).url.should eq 'http://sfbay.craigslist.org/search/hhh?srchType=A&bedrooms=3&addTwo=purrr&addThree=&maxAsk=&minAsk=3000'
-      option3 = {:location => 'sfbay', :section => 'hhh', :sub_region => 'sby', :max_price => 2000, :bedrooms => 4, :query => 'view', :dog => true }
+      option3 = {:location => 'sfbay', :section => 'hhh', :sub_region => 'sby', :max_price => 2000, :bedrooms => 4, :query => 'view', :dog => true, :user_id => 1 }
       Crawler.new(option3).url.should eq 'http://sfbay.craigslist.org/search/hhh/sby?srchType=A&sub_region=sby&bedrooms=4&query=view&addTwo=&addThree=wooof&maxAsk=2000&minAsk='
     end
   end

@@ -12,6 +12,9 @@ module CraigslistCrawler
     #attr_reader :listings
 
     def initialize(options = {})
+      #@id = nil
+      @user_id = options.delete(:user_id) { raise ArgumentError.new("You need to pass in a user id") }
+
       #required params
       @location = options.delete(:location) { raise ArgumentError.new("You need to pass in a location") } # eg sfbay
       @section = options.delete(:section) { raise ArgumentError.new("You need to pass in a section") } # eg hhh
@@ -69,7 +72,7 @@ module CraigslistCrawler
       email = full_email.match(/^mailto:(.*)\?/)[1]
       title = CGI.escape(doc.css('h2').first.children.text.gsub(' (map)', ''))
       craigslist_id = doc.css('span.postingidtext').collect { |post| post.children.text.gsub('PostingID: ', '') }[0].to_i
-      {:title => title, :email => email, :craigslist_id => craigslist_id}
+      {:title => title, :email => email, :craigslist_id => craigslist_id, :user_id => @user_id }
     end
 
   end

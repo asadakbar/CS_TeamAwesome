@@ -55,9 +55,8 @@ describe "Listing.new" do
   end
 
   context ".user_listings" do
-    it "generates an array of listings for a user" do
-
-    end
+    it "generates an array of listings for a user"
+      #user_listings(1)
   end
 
 end
