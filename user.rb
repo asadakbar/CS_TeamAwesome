@@ -4,12 +4,12 @@ module CraigslistCrawler
   class User
     attr_accessor :search_options, :email_options
 
-    def initialize(email, password, search_options = {}, email_options = {})
+    def initialize(email, password, search_options = {}, email_options = {}, database = "crawler.db")
       @email = email
       @password = password
       @search_options = search_options
       @email_options = email_options
-      @db = SQLite3::Database.new "crawler.db"
+      @db = CraigslistCrawler.db(database)
     end
 
     def save
@@ -20,13 +20,13 @@ module CraigslistCrawler
       end
     end
 
-    def self.authenticate(email, password)
-      @db = SQLite3::Database.new "crawler.db"
+    def self.authenticate(email, password, database = "crawler.db")
+      @db = CraigslistCrawler.db(database)
       user_array = @db.execute("select * from users where email = '#{email}' and password = '#{password}'")
       if user_array.length == 0
         raise "There's no user with that email and password."
       else
-        User.new(user_array[0][1], user_array[0][2])
+        User.new(user_array[0][1], user_array[0][2], nil, nil, database)
       end
     end
 

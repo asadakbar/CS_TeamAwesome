@@ -1,4 +1,5 @@
 require "rspec"
+require "./helpers.rb"
 require "./user.rb"
 
 include CraigslistCrawler
@@ -17,13 +18,13 @@ describe User do
                         :body => 'I\'m not creepy, I promise.'}
 
   before :each do
-    @db = SQLite3::Database.new "crawler.db"
+    @db = SQLite3::Database.new "test.db"
     @db.execute("DROP TABLE IF EXISTS USERS")
     @db.execute("CREATE TABLE users ( id INTEGER PRIMARY KEY AUTOINCREMENT,
                                       email VARCHAR NOT NULL,
                                       password VARCHAR NOT NULL
                                      );")
-    @test_user = User.new("orasaoneal@gmail.com", "password")
+    @test_user = User.new("orasaoneal@gmail.com", "password", nil, nil, "test.db")
   end
 
   context "#initialize" do
