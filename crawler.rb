@@ -51,7 +51,6 @@ module CraigslistCrawler
          #check if listing already exists before saving
         indiv_listing = Listing.new(listing_details(doc))
        # p indiv_listing
-
         indiv_listing.save!#save to db
         indiv_listing
       end.compact!

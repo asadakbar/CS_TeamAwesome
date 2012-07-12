@@ -2,7 +2,6 @@ require "./spec_helper"
 
 # test_listing = CraigslistCrawler::Listing.new('test.db')
 
-# c.save!
 
 describe "Crawler.new" do
 

@@ -17,6 +17,7 @@ module CraigslistCrawler
       begin
         RestClient.post("#{MAILGUN_URL}", @to, @from, @subject, @text)
         @sent_at = Time.now
+        # @sent_at
         :success
       rescue
         :failure

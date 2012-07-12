@@ -61,9 +61,11 @@ describe Message do
     it "returns the time the email was sent" do
       RestClient.should_receive(:post).with(*GOOD_MAILGUN_OPTIONS).and_return(MAILGUN_RESPONSE)
       Time.stub(:now).and_return(Time.now)
-
+      # p test_message.sent_at
       test_message.send!
       test_message.sent_at.should eq Time.now
+      test_message.sent_at.should_not be_nil
+      # p test_message.sent_at
     end
   end
 end
