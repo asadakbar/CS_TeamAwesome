@@ -1,17 +1,6 @@
 require "spec_helper"
 
 describe User do
-  TEST_SEARCH_OPTIONS = {:location => 'sfbay',
-                         :section => 'hhh',
-                         :query => 'victorian',
-                         :bedrooms => 2,
-                         :cat => true,
-                         :dog => true,
-                         :min_price => 1800,
-                         :max_price => 2600,
-                         :sub_region => 'sfc'}
-  TEST_EMAIL_OPTIONS = {:subject => 'I wanna live with you.',
-                        :body => 'I\'m not creepy, I promise.'}
 
   before :each do
     File.read("db/schema.sql").split(";").each { |line| CraigslistCrawler.database.execute(line) }
@@ -24,12 +13,11 @@ describe User do
       @test_user.should be_an_instance_of User
     end
     it "initializes with a search options hash as well" do
-      User.new("foo@bar.com", "password", {:location => 'sfbay'}).should be_an_instance_of User
+      User.new("foo@bar.com", "password").should be_an_instance_of User
     end
 
     it "initializes with an email options hash too!" do
-      User.new("foo@bar.com", "password", {:location => 'sfbay'},
-               {:subject => 'pick me pick me'}).should be_an_instance_of User
+      User.new("foo@bar.com", "password").should be_an_instance_of User
     end
   end
 
@@ -54,20 +42,6 @@ describe User do
       @test_user2 = @test_user.dup
       @test_user.save
       lambda { @test_user2.save }.should raise_error
-    end
-  end
-
-  context "#search_options" do
-    it "updates an existing user with new search options" do
-      @test_user.search_options = TEST_SEARCH_OPTIONS
-      @test_user.search_options.should eq TEST_SEARCH_OPTIONS
-    end
-  end
-
-  context "#email_options" do
-    it "updates an existing user with an email subject and body" do
-      @test_user.email_options = TEST_EMAIL_OPTIONS
-      @test_user.email_options.should eq TEST_EMAIL_OPTIONS
     end
   end
 end

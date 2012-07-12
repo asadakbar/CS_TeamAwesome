@@ -1,12 +1,8 @@
 module CraigslistCrawler
   class User
-    attr_accessor :search_options, :email_options
-
-    def initialize(email, password, search_options = {}, email_options = {})
+    def initialize(email, password)
       @email = email
       @password = password
-      @search_options = search_options
-      @email_options = email_options
     end
 
     def save
