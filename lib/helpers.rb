@@ -9,5 +9,3 @@ module CraigslistCrawler
     @database
   end
 end
-
-

@@ -1,7 +1,4 @@
-require "./spec_helper"
-
-# test_listing = CraigslistCrawler::Listing.new('test.db')
-
+require "spec_helper"
 
 describe "Crawler.new" do
 

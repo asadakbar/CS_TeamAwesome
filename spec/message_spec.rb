@@ -1,7 +1,4 @@
-require 'rspec'
-require './message.rb'
-
-include CraigslistCrawler
+require 'spec_helper'
 
 describe Message do
   MAILGUN_KEY = "key-86cra9g7axoraovh5tt96int-0elozd5"
