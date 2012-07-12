@@ -14,13 +14,10 @@ describe User do
                         :body => 'I\'m not creepy, I promise.'}
 
   before :each do
-    CraigslistCrawler.database.execute("DROP TABLE IF EXISTS USERS")
-    CraigslistCrawler.database.execute("CREATE TABLE users ( id INTEGER PRIMARY KEY AUTOINCREMENT,
-                                      email VARCHAR NOT NULL,
-                                      password VARCHAR NOT NULL
-                                     );")
+    File.read("./crawler.sql").split(";").each { |line| CraigslistCrawler.database.execute(line) }
     @test_user = User.new("orasaoneal@gmail.com", "password")
   end
+
 
   context "#initialize" do
     it "initializes a user with an email and password" do
@@ -31,7 +28,8 @@ describe User do
     end
 
     it "initializes with an email options hash too!" do
-      User.new("foo@bar.com", "password", {:location => 'sfbay'}, {:subject => 'pick me pick me'}).should be_an_instance_of User
+      User.new("foo@bar.com", "password", {:location => 'sfbay'},
+               {:subject => 'pick me pick me'}).should be_an_instance_of User
     end
   end
 

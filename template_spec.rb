@@ -5,10 +5,7 @@ describe Template do
   let(:test_template) { Template.new("Hey you've got a great place. Let's talk.") }
 
   before :each do
-    CraigslistCrawler.database.execute("DROP TABLE IF EXISTS message_templates")
-    CraigslistCrawler.database.execute("CREATE TABLE message_templates ( id INTEGER PRIMARY KEY AUTOINCREMENT,
-                                      text TEXT NOT NULL
-                                     );")
+    File.read("./crawler.sql").split(";").each { |line| CraigslistCrawler.database.execute(line) }
   end
 
   context "#new" do
