@@ -9,20 +9,28 @@ module CraigslistCrawler
 
     attr_reader :sent_at
 
-    def initialize(message_options)
-      message_options.each { |key, value| instance_variable_set("@#{key}", {key => value}) }
+    def initialize(user, listing, template)
+      @to = {to: listing.email}
+      @from = {from: user.email}
+      @subject = {subject: listing.title}
+      @text = {text: template.text}
+      @user_id = user.id
+      @message_template_id = template.id
     end
 
     def send!
       begin
         RestClient.post("#{MAILGUN_URL}", @to, @from, @subject, @text)
         @sent_at = Time.now
-        # p @sent_at
         :success
       rescue
-        # p @sent_at
         :failure
       end
+    end
+
+    def save
+      CraigslistCrawler.database.execute("INSERT INTO messages ('sent_at', 'user_id', 'message_template_id')
+                                          VALUES ('#{@sent_at}', '#{@user_id}', '#{@message_template_id}')")
     end
   end
 end

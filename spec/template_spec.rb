@@ -2,7 +2,10 @@ require "spec_helper"
 
 describe Template do
 
-  let(:test_template) { Template.new("Hey you've got a great place. Let's talk.") }
+  let(:test_template) do
+    user = User.new("test@email.com", "password")
+    Template.new("Hey you have got a great place. We should talk.", user)
+  end
 
   before :each do
     File.read("db/schema.sql").split(";").each { |line| CraigslistCrawler.database.execute(line) }
@@ -16,7 +19,7 @@ describe Template do
 
   context "#text" do
     it "returns the text of the message template" do
-      test_template.text.should eq("Hey you've got a great place. Let's talk.")
+      test_template.text.should eq("Hey you have got a great place. We should talk.")
     end
   end
 
@@ -36,7 +39,16 @@ describe Template do
   context ".from_db" do
     it "should create a template from the database" do
       template_id = test_template.save
-      Template.from_db(template_id).text.should eq "Hey you've got a great place. Let's talk."
+      user = User.new("test@email.com", "password")
+      user.save
+      Template.from_db(user).text.should eq "Hey you have got a great place. We should talk."
+    end
+  end
+
+  context "#id" do
+    it "should return the database id of the template" do
+      test_template.save
+      test_template.id.should eq 1
     end
   end
 

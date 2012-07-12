@@ -44,4 +44,17 @@ describe User do
       lambda { @test_user2.save }.should raise_error
     end
   end
+
+  context "#email" do
+    it "returns the user's email" do
+      @test_user.email.should eq("orasaoneal@gmail.com")
+    end
+  end
+
+  context "#id" do
+    it "returns the user's database id" do
+      @test_user.save
+      @test_user.id.should eq(1)
+    end
+  end
 end

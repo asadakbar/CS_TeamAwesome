@@ -50,9 +50,16 @@ describe "Listing.new" do
     end
   end
 
-  context ".user_listings" do
-    it "generates an array of listings for a user"
-      #user_listings(1)
+  context "#email" do
+    it "returns the email for the listing" do
+      listing.email.should eq 'vwdzk-3071972480@hous.craigslist.org'
+    end
+  end
+
+  context "#title" do
+    it "returns the title of the listing" do
+      listing.title.should eq '$62009 / 2br - Great house!'
+    end
   end
 
 end

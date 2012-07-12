@@ -1,4 +1,4 @@
-require "./user.rb"
+require "lib/helpers.rb"
 
 module CraigslistCrawler
   module Interface
@@ -6,15 +6,27 @@ module CraigslistCrawler
       puts "Welcome to the Craigslist scraper!"
       puts "Would you like to log in or create a new account? Type 'login' or 'new'."
       login_or_create = gets.chomp
-      case login_or_create
-      when "new"
-        new_user
-      when "login"
-        login
-      else
-        raise "Sorry, that wasn't a valid option. See ya."
+        case login_or_create
+        when "new"
+          new_user
+          get_crawler_options
+          get_template
+        when "login"
+          login
+          Crawler.from_db(@user)
+          Template.from_db(@user)
+        else
+          raise "Sorry, that wasn't a valid option. See ya."
+        end
+
+      loop do
+        puts "Searching for your terms..."
+        get_new_listings
+        puts "Sending messages..."
+        send_messages
+        puts "Waiting an hour before trying again..."
+        sleep 3_600
       end
-      enter_search_terms
     end
 
     def self.new_user
@@ -36,7 +48,7 @@ module CraigslistCrawler
       {:email => email, :password => password}
     end
 
-    def self.enter_search_terms
+    def self.get_crawler_options
       questions = {:location => "What location would you like? Please use the Craigslist code, e.g. 'sfbay'.",
                    :sub_region => "What sub-region would you like to search? e.g., 'sfc'.",
                    :section => "What section would you like to search? Currently, only housing sections are supported. e.g. 'hhh'.",
@@ -46,14 +58,38 @@ module CraigslistCrawler
                    :dog => "What about a dog?",
                    :min_price => "What is your minimum price?",
                    :max_price => "What is your maximum price?"}
-      search_options = {}
+
+      crawler_options = {}
 
       questions.each do |key, question|
         puts question
-        search_options[key] = gets.chomp
+        crawler_options[key] = gets.chomp
       end
 
-      @user.search_options = search_options
+      @crawler = Crawler.new(crawler_options)
+    end
+
+    def self.get_template
+      puts "Please type in the message you'd like to send to listings matching your search:"
+      template_text = gets.chomp
+      @template = Template.new(text)
+      @template.save
+    end
+
+    def self.crawl
+      # run the crawler
+    end
+
+    def self.get_new_listings
+      @listings = @crawler.listings
+    end
+
+    def self.send_messagess
+      @listings.each do |listing|
+        message = Message.new(@user, listing, @template)
+        message.send!
+        message.save
+      end
     end
 
   end

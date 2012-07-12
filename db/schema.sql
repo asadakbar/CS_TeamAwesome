@@ -21,7 +21,9 @@ CREATE TABLE listings (
 
 CREATE TABLE message_templates (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    text TEXT NOT NULL
+    text TEXT NOT NULL,
+    user_id INTEGER NOT NULL,
+    FOREIGN KEY(user_id) REFERENCES users(id)
 );
 
 CREATE TABLE messages (

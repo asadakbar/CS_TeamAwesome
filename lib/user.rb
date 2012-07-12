@@ -1,5 +1,9 @@
+require_relative "helpers"
+
 module CraigslistCrawler
   class User
+    attr_reader :email, :id
+
     def initialize(email, password)
       @email = email
       @password = password
@@ -11,6 +15,7 @@ module CraigslistCrawler
       else
         CraigslistCrawler.database.execute("insert into users ('email', 'password')
                                             values ('#{@email}', '#{@password}')")
+        @id = CraigslistCrawler.database.last_insert_row_id
       end
     end
 
