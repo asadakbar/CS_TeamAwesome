@@ -44,16 +44,17 @@ module CraigslistCrawler
       doc.css('p.row > a').collect {|url| url['href']}
     end
 
-    def listings
-      listings = listing_urls.collect do |listing_url|
+    def listings(limit = nil)
+      urls = limit.nil? ? listing_urls : listing_urls.first(limit)
+
+      listings = urls.collect do |listing_url|
         doc = Nokogiri::HTML(open(listing_url))
         next if listing_details(doc).nil?
          #check if listing already exists before saving
         indiv_listing = Listing.new(listing_details(doc))
-       # p indiv_listing
         indiv_listing.save!#save to db
         indiv_listing
-      end.compact!
+      end.compact
       listings
     end
 
