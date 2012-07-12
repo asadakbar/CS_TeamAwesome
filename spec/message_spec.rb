@@ -35,6 +35,10 @@ describe Message do
 
   let(:test_message) { Message.new(GOOD_MESSAGE_OPTIONS) }
 
+  # before :each do
+  #   @test_message = Message.new(GOOD_MESSAGE_OPTIONS)
+  # end
+
   context "#initialize" do
     it "initializes a new email with an options hash" do
       test_message.should be_an_instance_of Message
@@ -45,22 +49,24 @@ describe Message do
     it "returns :success if it successfully sends the email" do
       RestClient.should_receive(:post).with(*GOOD_MAILGUN_OPTIONS).and_return(MAILGUN_RESPONSE)
       test_message.send!.should eq(:success)
+      p test_message.sent_at
     end
 
     it "returns :failure if it can't send the email" do
       @bad_message = Message.new(BAD_MESSAGE_OPTIONS)
       RestClient.should_receive(:post).with(*BAD_MAILGUN_OPTIONS).and_raise(RestClient::BadRequest)
       @bad_message.send!.should eq(:failure)
+      # p test_message.sent_at
     end
   end
 
   context "#sent_at" do
     it "returns the time the email was sent" do
       RestClient.should_receive(:post).with(*GOOD_MAILGUN_OPTIONS).and_return(MAILGUN_RESPONSE)
-      Time.stub(:now).and_return(Time.now)
-      # p test_message.sent_at
+      time = Time.now
+      Time.stub(:now).and_return(time)
       test_message.send!
-      test_message.sent_at.should eq Time.now
+      test_message.sent_at.should eq time
       test_message.sent_at.should_not be_nil
       # p test_message.sent_at
     end

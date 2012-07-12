@@ -1,0 +1,8 @@
+
+Todo's
+x Need to check if nil values are being saved to the db through the listing method in crawler.rb
+- crawler refactor
+x Fixed bug in messages being sent @sent_at variable
+- save crawler to db
+x move search parameters from user to crawler
+- save messages to the db
