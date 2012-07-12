@@ -15,6 +15,6 @@ CraigslistCrawler.database = "db/test.db"
 # describe CraigslistCrawler do
 #   before :each do
 #     CraigslistCrawler.database = "./db/test.db"
-#     CraigslistCrawler.database.execute(File.read("./crawler.sql"))
+#     CraigslistCrawler.database.execute(File.read("db/schema.sql"))
 #   end
 # end

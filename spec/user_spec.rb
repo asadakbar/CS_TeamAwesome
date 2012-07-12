@@ -14,7 +14,7 @@ describe User do
                         :body => 'I\'m not creepy, I promise.'}
 
   before :each do
-    File.read("./crawler.sql").split(";").each { |line| CraigslistCrawler.database.execute(line) }
+    File.read("db/schema.sql").split(";").each { |line| CraigslistCrawler.database.execute(line) }
     @test_user = User.new("orasaoneal@gmail.com", "password")
   end
 

@@ -5,7 +5,7 @@ describe Template do
   let(:test_template) { Template.new("Hey you've got a great place. Let's talk.") }
 
   before :each do
-    File.read("./crawler.sql").split(";").each { |line| CraigslistCrawler.database.execute(line) }
+    File.read("db/schema.sql").split(";").each { |line| CraigslistCrawler.database.execute(line) }
   end
 
   context "#new" do
