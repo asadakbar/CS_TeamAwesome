@@ -48,9 +48,12 @@ module CraigslistCrawler
       listings = listing_urls.collect do |listing_url|
         doc = Nokogiri::HTML(open(listing_url))
         next if listing_details(doc).nil?
-        #check if listing already exists before saving
-        Listing.new(listing_details(doc))
-        #save to db
+         #check if listing already exists before saving
+        indiv_listing = Listing.new(listing_details(doc))
+       # p indiv_listing
+
+        indiv_listing.save!#save to db
+        indiv_listing
       end.compact!
       listings
     end
@@ -77,3 +80,7 @@ module CraigslistCrawler
 
   end
 end
+
+# crawler = CraigslistCrawler::Crawler.new(:location => "sfbay", :section => 'hhh', :user_id => 2)
+
+# puts crawler.listings.inspect

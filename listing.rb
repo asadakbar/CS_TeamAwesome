@@ -19,5 +19,12 @@ module CraigslistCrawler
     end
 
 
+
   end
 end
+
+# example = CraigslistCrawler::Listing.new(:title => "$62000 / 2br - Great house!",
+#                          :craigslist_id => 3071972480,
+#                          :email => 'vwdzk-3071972480@hous.craigslist.org',
+#                          :user_id => 1)
+# puts example
