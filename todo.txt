@@ -5,4 +5,6 @@ x Need to check if nil values are being saved to the db through the listing meth
 x Fixed bug in messages being sent @sent_at variable
 - save crawler to db
 x move search parameters from user to crawler
-- save messages to the db
+x save messages to the db
+- only add new listings to database after each crawl
+- Crawler.from_db

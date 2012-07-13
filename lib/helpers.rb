@@ -1,4 +1,7 @@
 require 'sqlite3'
+require 'open-uri'
+require 'nokogiri'
+require 'cgi'
 
 require_relative 'crawler'
 require_relative 'listing'

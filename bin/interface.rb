@@ -72,7 +72,7 @@ module CraigslistCrawler
     def self.get_template
       puts "Please type in the message you'd like to send to listings matching your search:"
       template_text = gets.chomp
-      @template = Template.new(text)
+      @template = Template.new(text, @user)
       @template.save
     end
 
