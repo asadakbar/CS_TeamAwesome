@@ -1,3 +1,5 @@
+require_relative "helpers"
+
 module CraigslistCrawler
   class Listing
     attr_reader :title, :craigslist_id, :email, :user_id, :id

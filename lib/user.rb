@@ -4,9 +4,10 @@ module CraigslistCrawler
   class User
     attr_reader :email, :id
 
-    def initialize(email, password)
+    def initialize(email, password, id = nil)
       @email = email
       @password = password
+      @id = id
     end
 
     def save
@@ -25,7 +26,7 @@ module CraigslistCrawler
       if user_array.length == 0
         raise "There's no user with that email and password."
       else
-        User.new(user_array[0][1], user_array[0][2])
+        User.new(user_array[0][1], user_array[0][2], user_array[0][0])
       end
     end
 

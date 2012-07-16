@@ -1,3 +1,10 @@
+
+require 'rubygems'
+require 'open-uri'
+require 'nokogiri'
+require 'cgi'
+require_relative 'helpers'
+
 module CraigslistCrawler
   class Crawler
     def initialize(options = {})

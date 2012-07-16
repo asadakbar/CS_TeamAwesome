@@ -13,6 +13,8 @@ include CraigslistCrawler
 
 CraigslistCrawler.database = "db/test.db"
 
+FakeWeb.allow_net_connect = false
+
 FakeWeb.register_uri(:get, "http://sfbay.craigslist.org/search/hhh?srchType=A&addTwo=&addThree=&maxAsk=&minAsk=", :body => File.read("./spec/listings.html"))
 FakeWeb.register_uri(:get, "http://sfbay.craigslist.org/sby/reb/3114067639.html", :body => File.read("./spec/listing.html"))
 FakeWeb.register_uri(:get, "http://sfbay.craigslist.org/sby/reb/3103486295.html", :body => File.read("./spec/listing2.html"))

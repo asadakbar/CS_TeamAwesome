@@ -1,10 +1,12 @@
+require_relative "helpers"
+
 module CraigslistCrawler
   class Template
     attr_accessor :text, :id
 
-    def initialize(text, user)
+    def initialize(text, user_id)
       @text = text
-      @user_id = user.id
+      @user_id = user_id
     end
 
     def save

@@ -1,8 +1,10 @@
-require "lib/helpers.rb"
+require_relative '../lib/helpers.rb'
 
 module CraigslistCrawler
   module Interface
+
     def self.start
+      CraigslistCrawler.database = "./db/prod.db"
       puts "Welcome to the Craigslist scraper!"
       puts "Would you like to log in or create a new account? Type 'login' or 'new'."
       login_or_create = gets.chomp
@@ -32,7 +34,7 @@ module CraigslistCrawler
     def self.new_user
       credentials = get_credentials
       @user = User.new(credentials[:email], credentials[:password])
-      @user.save
+      puts "New user created" if @user.save
     end
 
     def self.login
@@ -43,8 +45,10 @@ module CraigslistCrawler
     def self.get_credentials
       puts "Enter your email address:"
       email = gets.chomp
+      # get_credentials = {:email => email}
       puts "Enter your password:"
       password = gets.chomp
+      # get_credentials << {:password => password}
       {:email => email, :password => password}
     end
 
@@ -65,14 +69,13 @@ module CraigslistCrawler
         puts question
         crawler_options[key] = gets.chomp
       end
-
-      @crawler = Crawler.new(crawler_options)
+      @crawler = Crawler.new(crawler_options.merge(:user_id => @user.id))
     end
 
     def self.get_template
       puts "Please type in the message you'd like to send to listings matching your search:"
       template_text = gets.chomp
-      @template = Template.new(text, @user)
+      @template = Template.new(template_text, @user.id)
       @template.save
     end
 

@@ -1,4 +1,5 @@
 require 'rest-client'
+require_relative "helpers"
 require 'json'
 
 module CraigslistCrawler
