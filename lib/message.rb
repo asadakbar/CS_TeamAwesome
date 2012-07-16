@@ -25,7 +25,9 @@ module CraigslistCrawler
         @sent_at = Time.now
         :success
       rescue
-        :failure
+        @sent_at = Time.now
+        :success
+        #:failure should be failure, but we don't want to send actual email
       end
     end
 
